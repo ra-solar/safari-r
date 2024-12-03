@@ -2,7 +2,7 @@ let carImage;
 let backgroundImage;
 let carX = 0, carY = 0;
 let carSpeed = 8; // Increased speed
-let angle = -PI / 2;
+let angle = 0;
 let showingAnimal = false;
 let animalStartTime;
 let currentAnimalImage;
@@ -39,7 +39,7 @@ function preload() {
     }
   }
 
-  // Load the background music
+  // Load the background music (using .mp4 file)
   bgMusic = loadSound('music/forest.mp4');
 }
 
@@ -53,9 +53,6 @@ function setup() {
   // Initialize last car position
   lastCarX = carX;
   lastCarY = carY;
-
-  // Initialize audio context for autoplay policies
-  userStartAudio();
 }
 
 function draw() {
@@ -77,44 +74,32 @@ function draw() {
   } else {
     // Update car position based on key presses
     let moved = false;
-    let dx = 0;
-    let dy = 0;
-
     if (keyIsDown(LEFT_ARROW)) {
-      dx -= 1;
+      carX -= carSpeed;
+      angle = PI; // Rotate 180 degrees
       moved = true;
     }
     if (keyIsDown(RIGHT_ARROW)) {
-      dx += 1;
+      carX += carSpeed;
+      angle = 0; // No rotation
       moved = true;
     }
     if (keyIsDown(UP_ARROW)) {
-      dy -= 1;
+      carY -= carSpeed;
+      angle = -HALF_PI; // Rotate -90 degrees (up)
       moved = true;
     }
     if (keyIsDown(DOWN_ARROW)) {
-      dy += 1;
+      carY += carSpeed;
+      angle = HALF_PI; // Rotate 90 degrees (down)
       moved = true;
-    }
-
-    if (moved) {
-      // Normalize the movement vector to maintain consistent speed
-      let mag = sqrt(dx * dx + dy * dy);
-      dx = (dx / mag) * carSpeed;
-      dy = (dy / mag) * carSpeed;
-
-      carX += dx;
-      carY += dy;
-
-      // Calculate angle based on movement direction
-      angle = atan2(dy, dx) - PI / 2; // Corrected angle by subtracting 90°
     }
 
     // Calculate distance traveled
     if (moved) {
-      let deltaX = carX - lastCarX;
-      let deltaY = carY - lastCarY;
-      distanceTraveled += sqrt(deltaX * deltaX + deltaY * deltaY);
+      let dx = carX - lastCarX;
+      let dy = carY - lastCarY;
+      distanceTraveled += sqrt(dx * dx + dy * dy);
       lastCarX = carX;
       lastCarY = carY;
     }
@@ -139,7 +124,7 @@ function draw() {
     // Draw the car centered on the screen
     push();
     translate(width / 2, height / 2);
-    rotate(angle); // Use the corrected angle
+    rotate(angle);
     imageMode(CENTER);
     image(carImage, 0, 0);
     pop();
@@ -179,7 +164,7 @@ function keyPressed() {
       bgMusic.loop();
     }
   } else if (!showingAnimal && keyCode === 32) {
-    // Show a random animal when space is pressed during the game
+    // Pick a random animal image
     showRandomAnimal();
   }
 }
