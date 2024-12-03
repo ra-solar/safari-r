@@ -33,7 +33,7 @@ function preload() {
   for (let folder of animalFolders) {
     for (let i = 1; i <= folder.count; i++) {
       let number = String(i).padStart(2, "0");
-      let img = loadImage(`images/${folder.name}/animal-${number}.jpg`);
+      let img = loadImage(`images/${folder.name}/animal-${number}.png`);
       folder.images.push(img);
     }
   }
