@@ -107,7 +107,7 @@ function draw() {
       carY += dy;
 
       // Calculate angle based on movement direction
-      angle = atan2(dy, dx) + PI / 2;
+      angle = atan2(dy, dx) + PI;
 
     }
 
