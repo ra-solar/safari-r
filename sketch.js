@@ -107,11 +107,7 @@ function draw() {
       carY += dy;
 
       // Calculate angle based on movement direction
-      angle = atan2(dy, dx);
-
-      // Adjust angle based on car image's initial orientation
-      // Assuming the car image is facing upwards at 0 radians
-      angle += PI / 2;
+      angle = atan2(dy, dx) - HALF_PI; // Corrected angle calculation
     }
 
     // Calculate distance traveled
@@ -143,7 +139,7 @@ function draw() {
     // Draw the car centered on the screen
     push();
     translate(width / 2, height / 2);
-    rotate(angle);
+    rotate(angle); // Use the corrected angle
     imageMode(CENTER);
     image(carImage, 0, 0);
     pop();
