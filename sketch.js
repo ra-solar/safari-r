@@ -39,7 +39,7 @@ function preload() {
     }
   }
 
-  // Load the background music (using .mp4 file)
+  // Load the background music
   bgMusic = loadSound('music/forest.mp4');
 }
 
@@ -53,6 +53,9 @@ function setup() {
   // Initialize last car position
   lastCarX = carX;
   lastCarY = carY;
+
+  // Initialize audio context for autoplay policies
+  userStartAudio();
 }
 
 function draw() {
@@ -105,6 +108,10 @@ function draw() {
 
       // Calculate angle based on movement direction
       angle = atan2(dy, dx);
+
+      // Adjust angle based on car image's initial orientation
+      // Assuming the car image is facing upwards at 0 radians
+      angle += PI / 2;
     }
 
     // Calculate distance traveled
