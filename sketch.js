@@ -1,6 +1,6 @@
 let carImage;
 let backgroundImage;
-let carX = 0, carY = 0; // Start at the top-left corner of the background
+let carX = 0, carY = 0;
 let carSpeed = 8; // Increased speed
 let angle = 0;
 let showingAnimal = false;
@@ -39,7 +39,7 @@ function preload() {
     }
   }
 
-  // Load the background music
+  // Load the background music (using .mp4 file)
   bgMusic = loadSound('music/forest.mp4');
 }
 
@@ -163,5 +163,8 @@ function keyPressed() {
     if (!bgMusic.isPlaying()) {
       bgMusic.loop();
     }
+  } else if (!showingAnimal && keyCode === 32) {
+    // Pick a random animal image
+    showRandomAnimal();
   }
 }
