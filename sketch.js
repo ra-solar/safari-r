@@ -2,7 +2,7 @@ let carImage;
 let backgroundImage;
 let carX = 0, carY = 0;
 let carSpeed = 8; // Increased speed
-let angle = 0;
+let angle = -PI / 2;
 let showingAnimal = false;
 let animalStartTime;
 let currentAnimalImage;
