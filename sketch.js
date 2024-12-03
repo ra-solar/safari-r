@@ -107,8 +107,7 @@ function draw() {
       carY += dy;
 
       // Calculate angle based on movement direction
-      angle = atan2(dy, dx) + PI;
-
+      angle = atan2(dy, dx) - PI / 2; // Corrected angle by subtracting 90°
     }
 
     // Calculate distance traveled
