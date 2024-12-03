@@ -1,19 +1,18 @@
 let carImage;
 let backgroundImage;
-let animalImages = [];
 let carX = 0, carY = 0; // Start at the top-left corner of the background
-let carSpeed = 8; // Increased car speed
+let carSpeed = 8; // Increased speed
 let angle = 0;
 let showingAnimal = false;
 let animalStartTime;
 let currentAnimalImage;
 let backgroundWidth, backgroundHeight;
+let bgMusic; // Variable for background music
+let gameState = 'intro'; // Game state variable
 
 let lastCarX = 0, lastCarY = 0;
 let distanceTraveled = 0;
 let distanceThreshold = 500; // Adjust this value as needed
-
-let gameStarted = false; // Variable to track if the game has started
 
 // Define folders and their weights
 const animalFolders = [
@@ -27,7 +26,7 @@ const animalFolders = [
 function preload() {
   // Load and resize the car image
   carImage = loadImage("images/toyota.png", function () {
-    carImage.resize(carImage.width / 3, 0); // Made the car smaller
+    carImage.resize(carImage.width / 3, 0); // Make the car smaller
   });
   backgroundImage = loadImage("images/forest.png");
 
@@ -39,6 +38,9 @@ function preload() {
       folder.images.push(img);
     }
   }
+
+  // Load the background music
+  bgMusic = loadSound('music/forest.mp4');
 }
 
 function setup() {
@@ -54,13 +56,13 @@ function setup() {
 }
 
 function draw() {
-  if (!gameStarted) {
-    // Display intro screen
+  if (gameState === 'intro') {
+    // Display the intro screen
     background(0); // Black background
     fill(255); // White text
     textAlign(CENTER, CENTER);
     textSize(32);
-    text("Press space to start safari", width / 2, height / 2);
+    text('Press SPACE to start safari', width / 2, height / 2);
   } else if (showingAnimal) {
     // Display the animal image fullscreen
     image(currentAnimalImage, 0, 0, width, height);
@@ -154,9 +156,12 @@ function showRandomAnimal() {
 }
 
 function keyPressed() {
-  if (keyCode === 32) { // 32 is the space bar
-    if (!gameStarted) {
-      gameStarted = true;
+  if (gameState === 'intro' && keyCode === 32) { // 32 is the keycode for SPACE
+    gameState = 'play'; // Start the game
+
+    // Start the background music
+    if (!bgMusic.isPlaying()) {
+      bgMusic.loop();
     }
   }
 }
